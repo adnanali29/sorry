@@ -44,25 +44,15 @@
 
         .hidden-page { display: none !important; }
         
-        button { cursor: pointer; position: relative; z-index: 50; }
+        button, a { cursor: pointer; position: relative; z-index: 50; }
 
-        /* Video Styling - 16:9 Landscape */
-        .video-wrapper {
-            position: relative;
-            padding-bottom: 56.25%; /* 16:9 Ratio */
-            height: 0;
-            overflow: hidden;
-            border-radius: 2rem;
-            box-shadow: 0 20px 40px rgba(225, 29, 72, 0.25);
-            border: 8px solid white;
-            background: #000;
+        .btn-glow {
+            box-shadow: 0 0 20px rgba(225, 29, 72, 0.4);
+            transition: all 0.3s ease;
         }
-        .video-wrapper iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+        .btn-glow:hover {
+            box-shadow: 0 0 35px rgba(225, 29, 72, 0.6);
+            transform: scale(1.05);
         }
     </style>
 </head>
@@ -139,22 +129,18 @@
                 </div>
             </div>
 
-            <!-- Video Section - Streamable Embed -->
-            <div class="mb-10 w-full animate-fade-in" style="animation-delay: 0.6s">
-                <div class="video-wrapper">
-                    <!-- Added essential allow attributes and referrerpolicy for production reliability -->
-                    <iframe 
-                        id="apology-video"
-                        src="" 
-                        frameborder="0" 
-                        width="100%" 
-                        height="100%" 
-                        allowfullscreen 
-                        allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
-                        referrerpolicy="no-referrer-when-downgrade">
-                    </iframe>
-                </div>
-                <p class="text-rose-300 text-xs mt-3 uppercase tracking-widest font-bold">Tap to unmute if needed 💖</p>
+            <!-- Video Link Button -->
+            <div class="mb-10 w-full animate-fade-in flex flex-col items-center" style="animation-delay: 0.6s">
+                <p class="text-rose-400 font-bold mb-4 flex items-center gap-2">
+                    <svg class="w-5 h-5 animate-bounce" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z"/></svg>
+                    I made something for you...
+                </p>
+                <a href="https://drive.google.com/file/d/112aEl0bsKKrtldzftB9G_bn8UMfAuF7V/view?usp=drive_link" 
+                   target="_blank" 
+                   class="btn-glow inline-flex items-center gap-3 bg-gradient-to-r from-rose-500 to-pink-500 text-white text-xl font-bold py-4 px-10 rounded-full shadow-lg transition-all no-underline">
+                   <span>Click me</span>
+                   <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"/></svg>
+                </a>
             </div>
 
             <div class="mt-8 flex justify-center relative scale-110 bangle-markup"></div>
@@ -207,15 +193,6 @@
             if (activePage) {
                 activePage.classList.remove('hidden-page');
                 activePage.querySelectorAll('.bangle-markup').forEach(div => div.innerHTML = bangleSVG);
-
-                const videoFrame = document.getElementById('apology-video');
-                if (pageId === 'reallySorry') {
-                    // Added loop and interaction parameters to Streamable URL
-                    videoFrame.src = "https://streamable.com/e/2acykh?autoplay=1&muted=1&loop=1";
-                } else {
-                    // Clean clear to stop video audio completely on back
-                    videoFrame.src = "about:blank";
-                }
             }
             
             const decorContainer = document.getElementById('bg-decor');
